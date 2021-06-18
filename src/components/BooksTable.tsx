@@ -1,47 +1,49 @@
-import { HttpConnection, LocationService, Prefix } from '@tmtsoftware/esw-ts'
-import { Table } from 'antd'
+import { HttpConnection, Prefix } from '@tmtsoftware/esw-ts'
+import { Table, Typography } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
 import React, { useEffect, useState } from 'react'
+import { fetchBooksData, showError } from '../helpers/HttpUtils'
+import { useLocationService } from '../helpers/LocationServiceContext'
+import type { Book } from '../models/Models'
 
-interface Book {
-  id: string
-  title: string
-  authorName: string
-  available: boolean
-}
+const HeaderTitle = ({ title }: { title: string }): JSX.Element => (
+  <Typography.Title level={5} style={{ marginBottom: 0 }}>
+    {title}
+  </Typography.Title>
+)
 
-const fetchBooksData = (baseUri: string): Promise<Book[]> => {
-  const url = baseUri + 'books'
-  return fetch(url).then((response) => response.json())
-}
+const columns: ColumnsType<Book> = [
+  {
+    title: <HeaderTitle title={'Title'} />,
+    dataIndex: 'title',
+    key: 'title'
+  },
+  {
+    title: <HeaderTitle title={'Author'} />,
+    dataIndex: 'authorName',
+    key: 'authorName'
+  },
+  {
+    title: <HeaderTitle title={'Available'} />,
+    dataIndex: 'available',
+    key: 'available',
+    render: (value: boolean) => (value ? 'Yes' : 'No')
+  }
+]
 
-export const BooksTable = (): JSX.Element => {
+export const BooksTable = ({ reload }: { reload: boolean }): JSX.Element => {
+  const locationService = useLocationService()
   const [booksData, setBooksData] = useState<Book[]>()
 
-  const connection = HttpConnection(new Prefix('ESW', 'library'), 'Service')
+  const connection = HttpConnection(Prefix.fromString('ESW.library'), 'Service')
 
   useEffect(() => {
-    // LocationService()
-    //   .find(connection)
-    //   .then((response) => response &&
-    fetchBooksData('http://192.168.10.34:9090/').then(setBooksData)
-  }, [])
+    locationService
+      .find(connection)
+      .then((response) => response && fetchBooksData(response.uri))
+      .then(setBooksData)
+      .catch((e) => showError('Failed to fetch books data', e))
+  }, [reload])
 
-  const columns = [
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title'
-    },
-    {
-      title: 'Author',
-      dataIndex: 'authorName',
-      key: 'authorName'
-    },
-    {
-      title: 'Available',
-      dataIndex: 'available',
-      key: 'available'
-    }
-  ]
-  return <Table dataSource={booksData} columns={columns} />
+  return <Table rowKey={(record) => record.id} pagination={false} dataSource={booksData} columns={columns} bordered />
 }
