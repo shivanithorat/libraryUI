@@ -14,7 +14,7 @@ const HeaderTitle = ({ title }: { title: string }): JSX.Element => (
 
 const columns: ColumnsType<Book> = [
   {
-    title: <HeaderTitle title={'Title'} />,
+    title: <HeaderTitle title={'Book Title'} />,
     dataIndex: 'title',
     key: 'title'
   },

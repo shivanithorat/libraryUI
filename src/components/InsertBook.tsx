@@ -36,9 +36,9 @@ export const InsertBook = ({
     <>
       <Form {...layout} ref={ref} onFinish={onFinish} className={styles.formBody}>
         <Form.Item className={styles.formHeader}>
-          <Typography.Title level={4}>{'Add the New Book'}</Typography.Title>
+          <Typography.Title level={4}>{'Add New Book'}</Typography.Title>
         </Form.Item>
-        <Form.Item label={'Title'} name={'title'} style={{ width: '30rem' }}>
+        <Form.Item label={'Book Title'} name={'title'} style={{ width: '30rem' }}>
           <Input role={'Title'} />
         </Form.Item>
         <Form.Item label={'Author Name'} name={'author'} style={{ width: '30rem' }}>
