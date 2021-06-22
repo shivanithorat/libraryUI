@@ -22,11 +22,11 @@ describe('InsertBook', () => {
   it('should make a insert request with given book data to the backend', async () => {
     const id = 'some-id'
     const title = 'the conjuring'
-    const authorName = 'Unknown'
+    const author = 'Unknown'
     const book = {
       _type: 'InsertBook',
       title,
-      authorName
+      author: author
     }
 
     const assert = (s: boolean) => expect(s).to.false
@@ -42,7 +42,7 @@ describe('InsertBook', () => {
     const authorInput = (await screen.findByRole('AuthorName')) as HTMLInputElement
 
     userEvent.type(titleInput, title)
-    userEvent.type(authorInput, authorName)
+    userEvent.type(authorInput, author)
 
     const submitButton = (await screen.findByRole('Submit')) as HTMLButtonElement
 

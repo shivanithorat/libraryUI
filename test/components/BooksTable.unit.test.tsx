@@ -23,7 +23,7 @@ describe('BooksTable', () => {
     const book: Book = {
       id: '',
       title: 'the conjuring',
-      authorName: 'Unknown',
+      author: 'Unknown',
       available: false
     }
 

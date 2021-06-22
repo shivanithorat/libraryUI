@@ -1,8 +1,10 @@
 import { message } from 'antd'
 import type { Book } from '../models/Models'
 
+
+const getPath = (basePath:string) => basePath + 'books'
 export const fetchBooksData = (baseUri: string): Promise<Book[]> => {
-  const url = baseUri + 'books'
+  const url = getPath(baseUri)
   return fetch(url).then((res) => handleRes(res, (res) => res.json()))
 }
 
@@ -11,8 +13,8 @@ const handleRes = <T>(res: Response, reader: (res: Response) => T) => {
   return reader(res)
 }
 
-export const insertBook = (baseUri: string, body: { title: string; authorName: string }): Promise<string> => {
-  const url = baseUri + 'insert'
+export const insertBook = (baseUri: string, body: { title: string; author: string }): Promise<string> => {
+  const url = getPath(baseUri)
   const headers = { 'Content-Type': 'application/json' }
 
   return fetch(url, {

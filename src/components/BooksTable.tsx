@@ -20,8 +20,8 @@ const columns: ColumnsType<Book> = [
   },
   {
     title: <HeaderTitle title={'Author'} />,
-    dataIndex: 'authorName',
-    key: 'authorName'
+    dataIndex: 'author',
+    key: 'author'
   },
   {
     title: <HeaderTitle title={'Available'} />,

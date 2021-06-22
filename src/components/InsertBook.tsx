@@ -1,9 +1,10 @@
 import { HttpConnection, Prefix } from '@tmtsoftware/esw-ts'
-import { Button, Form, FormInstance, Input } from 'antd'
+import { Button, Form, FormInstance, Input, Typography } from 'antd'
 import React, { createRef } from 'react'
 import { insertBook, showError } from '../helpers/HttpUtils'
 import { useLocationService } from '../helpers/LocationServiceContext'
 import type { InsertBookReq } from '../models/Models'
+import styles from './style.module.css'
 
 export const InsertBook = ({
   reload,
@@ -32,18 +33,23 @@ export const InsertBook = ({
   }
 
   return (
-    <Form {...layout} ref={ref} onFinish={onFinish} style={{ width: '30rem' }}>
-      <Form.Item label={'Title'} name={'title'}>
-        <Input role={'Title'} />
-      </Form.Item>
-      <Form.Item label={'Author Name'} name={'authorName'}>
-        <Input role={'AuthorName'} />
-      </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type='primary' htmlType='submit' role={'Submit'}>
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+    <>
+      <Form {...layout} ref={ref} onFinish={onFinish} className={styles.formBody}>
+        <Form.Item className={styles.formHeader}>
+          <Typography.Title level={4}>{'Add the New Book'}</Typography.Title>
+        </Form.Item>
+        <Form.Item label={'Title'} name={'title'} style={{ width: '30rem' }}>
+          <Input role={'Title'} />
+        </Form.Item>
+        <Form.Item label={'Author Name'} name={'author'} style={{ width: '30rem' }}>
+          <Input role={'AuthorName'} />
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }} className={styles.formFooter}>
+          <Button type='primary' htmlType='submit' role={'Submit'}>
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   )
 }

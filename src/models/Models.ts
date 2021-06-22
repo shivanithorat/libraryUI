@@ -1,11 +1,11 @@
 export interface Book {
   id: string
   title: string
-  authorName: string
+  author: string
   available: boolean
 }
 
 export interface InsertBookReq {
-  authorName: string
+  author: string
   title: string
 }
