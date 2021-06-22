@@ -1,4 +1,4 @@
-import { Layout, Typography } from 'antd'
+import { Card, Layout, Typography } from 'antd'
 import React, { useState } from 'react'
 import 'antd/dist/antd.css'
 import { BooksTable } from '../components/BooksTable'
@@ -21,7 +21,9 @@ const App = (): JSX.Element => {
           </Header>
           <Content className={styles.content}>
             <InsertBook reload={reload} setReload={setReload} />
-            <BooksTable reload={reload} />
+            <Card title={<Typography.Title level={4}>Books In The Library</Typography.Title>}>
+              <BooksTable reload={reload} />
+            </Card>
           </Content>
         </Layout>
       </LocationServiceProvider>
