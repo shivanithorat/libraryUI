@@ -1,8 +1,8 @@
 import { message } from 'antd'
 import type { Book } from '../models/Models'
 
-
 const getPath = (basePath:string) => basePath + 'books'
+
 export const fetchBooksData = (baseUri: string): Promise<Book[]> => {
   const url = getPath(baseUri)
   return fetch(url).then((res) => handleRes(res, (res) => res.json()))

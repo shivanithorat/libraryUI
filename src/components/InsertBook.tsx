@@ -1,10 +1,10 @@
-import { HttpConnection, Prefix } from '@tmtsoftware/esw-ts'
 import { Button, Form, FormInstance, Input, Typography } from 'antd'
 import React, { createRef } from 'react'
 import { insertBook, showError } from '../helpers/HttpUtils'
 import { useLocationService } from '../helpers/LocationServiceContext'
 import type { InsertBookReq } from '../models/Models'
 import styles from './style.module.css'
+import { resolveBackendUrl } from '../helpers/resolveBackend'
 
 export const InsertBook = ({
   reload,
@@ -15,11 +15,9 @@ export const InsertBook = ({
 }): JSX.Element => {
   const locationService = useLocationService()
   const ref = createRef<FormInstance>()
-  const connection = HttpConnection(Prefix.fromString('ESW.library'), 'Service')
 
   const onFinish = (values: InsertBookReq) => {
-    locationService
-      .find(connection)
+    resolveBackendUrl(locationService)
       .then((res) => {
         res && insertBook(res.uri, values).then(() => setReload(!reload))
         ref.current?.resetFields()
